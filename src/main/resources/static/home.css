@@ -1,126 +1,172 @@
 
-body {
-    background-image: url("https://www.mural-wallpaper.com/wp-content/uploads/2021/10/S-NU23.jpg");
-    background-color: transparent;
-    background-size: cover;
-}
 
-.negativeMargin {
-    margin-top: -60px;
-}
-
-.negativeMargin2 {
-    margin-top: -40px;
-}
-
-.homeButton {
-    /*Center image*/
-    float: right;
-    margin-top: -70px;
-    margin-right: 10px;
-    width: 15%;
-
-    /*Hover part*/
-    z-index: 999;
+/* General button style */
+.btn {
+    border: none;
+    font-family: 'Lato';
+    font-size: inherit;
+    color: inherit;
+    background: none;
     cursor: pointer;
-    -webkit-transition-property: all;
-    -webkit-transition-duration: 0.3s;
-    -webkit-transition-timing-function: ease;
-    filter: grayscale(100);
+    padding: 25px 80px;
+    display: inline-block;
+    margin: 15px 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
 }
 
-.homeButton:hover {
-    transform: scale(1.1);
-    filter: grayscale(0);
+.btn:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
 }
 
-.cloudButton {
-    /*Center image*/
-    float: right;
-    margin-right: 10px;
-    width: 15%;
-
-    /*Hover part*/
-    z-index: 999;
-    cursor: pointer;
-    -webkit-transition-property: all;
-    -webkit-transition-duration: 0.3s;
-    -webkit-transition-timing-function: ease;
-    filter: grayscale(100);
-}
-
-.cloudButton:hover {
-    transform: scale(1.1);
-    filter: grayscale(0);
-}
-
-#headerDiv {
-    text-align: center;
-
-}
-
-.mainLoginDiv {
-    position: center;
-    align-self: auto;
-    margin-left: 50px;
-    margin-right: 50px;
-    height: 500px;
-
-
-}
-
-.flexBox {
-    display: flex;
+/* Pseudo elements for icons */
+.btn:before {
+    font-family: 'FontAwesome';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
 }
 
 
-#loginDiv1 {
-    margin: 5px 5px 5px;
-    width: 49%;
-    height: 50%;
-    float: left;
-    text-align: center;
-
-
+/* Icon separator */
+.btn-sep {
+    padding: 25px 60px 25px 120px;
 }
 
-#loginDiv2 {
-    margin: 5px 5px 5px;
-    width: 49%;
-    height: 50%;
-    float: right;
-    text-align: center;
-
+.btn-sep:before {
+    background: rgba(0,0,0,0.15);
 }
 
-.homePageInputs {
-    color: #849695;
-    border-radius: 7px;
+/* Button 1 */
+.btn-1 {
+    background: #3498db;
+    color: #fff;
 }
 
-ul {
-    background-color: rgba(0, 246, 255, 0.28);
-    height: auto;
-    width: 200px;
-    border-radius: 10px;
-
+.btn-1:hover {
+    background: #2980b9;
 }
 
-.header1 {
-    font-family: Verdana, serif;
-    text-align: center;
-
+.btn-1:active {
+    background: #2980b9;
+    top: 2px;
 }
 
-.loginMargin {
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-    border-right: 25px solid transparent;
+.btn-1:before {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    line-height: 3;
+    font-size: 140%;
+    width: 60px;
 }
 
-.verdanaText {
-    font-family: Verdana, serif;
+/* Button 2 */
+.btn-2 {
+    background: #2ecc71;
+    color: #fff;
 }
-#listshowed{
-    font-size: x-large;
+
+.btn-2:hover {
+    background: #27ae60;
+}
+
+.btn-2:active {
+    background: #27ae60;
+    top: 2px;
+}
+
+.btn-2:before {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    line-height: 3;
+    font-size: 140%;
+    width: 60px;
+}
+
+/* Button 3 */
+.btn-3 {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.btn-3:hover {
+    background: #c0392b;
+}
+
+.btn-3:active {
+    background: #c0392b;
+    top: 2px;
+}
+
+.btn-3:before {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    line-height: 3;
+    font-size: 140%;
+    width: 60px;
+}
+
+/* Button 3 */
+.btn-4 {
+    background: #34495e;
+    color: #fff;
+}
+
+.btn-4:hover {
+    background: #2c3e50;
+}
+
+.btn-4:active {
+    background: #2c3e50;
+    top: 2px;
+}
+
+.btn-4:before {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    line-height: 3;
+    font-size: 140%;
+    width: 60px;
+}
+
+/* Icons */
+
+.icon-cart:before {
+    content: "\f07a";
+}
+
+.icon-heart:before {
+    content: "\f55a";
+}
+
+.icon-info:before {
+    content: "\f05a";
+}
+
+.icon-send:before {
+    content: "\f1d8";
 }

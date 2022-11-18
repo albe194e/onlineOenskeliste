@@ -1,6 +1,7 @@
 package com.example.oenskeliste.Repository;
 
 import com.example.oenskeliste.Model.DCM;
+import com.example.oenskeliste.Model.Wish;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,10 +11,9 @@ public class WishListRepository {
 
     Connection connection = DCM.getConn();
 
-    public ArrayList<String> getWishesByPassword(String password) {
+    public ArrayList<Wish> getWishesByPassword(String password) {
 
         //Finds the user by password
-        ArrayList<String> wishes = new ArrayList<>();
         String PASSWORD_QUERY = "SELECT Id, Password from user";
         int userId = 0;
 
@@ -34,13 +34,21 @@ public class WishListRepository {
         }
 
         //Selects wishes by user id
+
+        ArrayList<Wish> wishes = new ArrayList<>();
+
         String MAIN_QUERY = "SELECT * FROM wish WHERE UserId = " + userId;
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(MAIN_QUERY);
+            PreparedStatement preparedStatement = connection.prepareStatement(MAIN_QUERY);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                wishes.add(resultSet.getString(2));
+                Wish wish = new Wish(resultSet.getString(2),
+                                     resultSet.getString(3),
+                                     resultSet.getString(4),
+                                     resultSet.getString(5));
+
+                wishes.add(wish);
             }
 
         } catch (SQLException e) {
@@ -72,5 +80,26 @@ public class WishListRepository {
             throw new RuntimeException(e);
         }
         return null;
+    }
+    public boolean checkIfListExists(String password){
+
+        String QUARY = "SELECT * from user";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(QUARY);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                String userPassword = resultSet.getString(4);
+
+                if (userPassword.equals(password)){
+                    return true;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

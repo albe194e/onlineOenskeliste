@@ -1,4 +1,5 @@
 package com.example.oenskeliste.Controller;
+import com.example.oenskeliste.Model.Wish;
 import com.example.oenskeliste.Service.UserService;
 import com.example.oenskeliste.Service.WishlistService;
 import org.springframework.stereotype.Controller;
@@ -17,28 +18,25 @@ public class ShowWishListController {
     private WishlistService wls = new WishlistService();
 
     @GetMapping("/getList")
-    public String getList(WebRequest req, Model model, HttpSession session) {
+    public String getList(WebRequest req, Model model) {
 
-        model.addAttribute("date", DateFormat.getDateInstance().format(new Date()));
+        if (wls.checkIfListExists(req.getParameter("password"))){
+            ArrayList<Wish> wishes = wls.getAllByPassword(req);
+            //Thymeleaf
+            model.addAttribute("wish", wishes);
+            model.addAttribute("name", wls.getName(req));
+            return "/reservedWishList";
+        } else {
 
-        if (session.getAttribute("user") != null){
-            model.addAttribute("login", "Logget ind som: " + session.getAttribute("user"));
+            model.addAttribute("errorMessage", "Der findes ingen ønskeliste med det password");
+
+            return "index";
         }
 
-        ArrayList<String> wishes = wls.getAllByPassword(req);
-        String name = wls.getName(req);
 
-        String list = "";
 
-        for (int i = 0; i < wishes.size(); i++) {
-            list += "- " + wishes.get(i) + "\n";
-        }
 
-        session.setAttribute("wishList", list);
-        //Thymeleaf
-        model.addAttribute("list",session.getAttribute("wishList"));
-        model.addAttribute("name",session.getAttribute("user"));
 
-        return "/reservedWishList";
+
     }
 }

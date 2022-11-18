@@ -4,18 +4,42 @@
     <meta charset="UTF-8">
     <title>ReservedList</title>
     <link rel="stylesheet" href="/home.css">
+    <link rel="stylesheet" href="/create.css">
+    <link rel="stylesheet" href="/ønskeliste.css">
+    <link rel="stylesheet" href="/background.css">
 </head>
-<body onload="createList()">
-<div>
-    <h4 class="verdanaText"> <span th:text="${date}"></span></h4>
-    <h1 class="verdanaText"> <span th:text="${name}"></span>'s ønskeliste </h1>
-    <h4 class="verdanaText"> <span th:text="${login}"></span></h4>
-    <a href="http://176.22.128.91/">
-        <img style="float:right;" class="cloudButton" src="homeButton.png" width="100px" height="100px">
-    </a>
+<body>
+<a href="http://176.22.128.91/" style="position: fixed; top: 0; right: 0"> <button class="btn btn-2 btn-sep icon-cart"> Home</button> </a>
+
+<div class="full-screen">
+    <div>
+        <h1 style="margin-top: 10px" class="verdanaText"><span th:text="${name}"></span>'s ønskeliste </h1>
+    </div>
+    <div style="width: 50%; align-self: center; height: 1000px">
+        <div class="table-wrapper">
+            <table id="wishlist" class="fl-table">
+                <thead>
+                <tr>
+                    <th>Nr</th>
+                    <th>Ønske</th>
+                    <th>Pris</th>
+                    <th>Link</th>
+                    <th>Note</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="wish : ${wish}">
+                    <td th:text="${wishStat.index + 1}"></td>
+                    <td id="id" th:text="${wish.name}"></td>
+                    <td th:text="${wish.price}"></td>
+                    <td th:text="${wish.link}"></td>
+                    <td th:text="${wish.note}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<div >
-    <pre class="verdanaText" id="listshowed" th:text="${list}"></pre>
-</div>
+
 </body>
 </html>

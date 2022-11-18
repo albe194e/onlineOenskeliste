@@ -1,71 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/home.css">
+
+
+    <link rel="stylesheet" href="/buttons.css">
+    <link rel="stylesheet" href="/indexSide.css">
+    <link rel="stylesheet" href="/inputs.css">
+    <link rel="stylesheet" href="/background.css">
+
     <meta charset="UTF-8">
     <title>Her kan du lave din egen online ønskeseddel!</title>
 </head>
 <body onload="loadLogOutbutton()">
-<div>
-    <h4 class="verdanaText"> <span th:text="${date}"></span></h4>
-    <div class="negativeMargin2">
-        <h1 class="header1">Lav din egen online ønskeseddel</h1>
-        <a href="http://176.22.128.91/">
-            <img style="float:right;" class="cloudButton" src="homeButton.png" width="100px" height="100px">
-        </a>
+<a href="http://176.22.128.91/" style="position: fixed; top: 0; right: 0"> <button class="btn btn-2 btn-sep icon-cart"> Home</button> </a>
+
+<div class="full-screen">
+
+    <div style="float: top; margin-bottom: 100px">
+
+        <h3 style="margin-bottom: 50px; color: black"><span th:text="${date}"></span></h3>
+        <div class="negativeMargin2">
+            <h1 style="margin-top: 10px" class="header1">Lav din egen online ønskeseddel</h1>
+
+        </div>
+        <div class="loginMargin">
+            <h4 class="verdanaText"><span id="loggedIn?" th:text="${login}"></span></h4>
+        </div>
+
 
     </div>
-    <div class="loginMargin">
-        <h4 class="verdanaText"> <span id="loggedIn?" th:text="${login}"></span></h4>
+
+    <div>
+
+        <div>
+            <ul>
+                <li>
+                    <button onclick="showDiv(this)" class="btn btn-1 btn-sep icon-info" id="1">Opret konto</button>
+                </li>
+                <li>
+                    <button onclick="showDiv(this)" class="btn btn-1 btn-sep icon-info" id="2">Login</button>
+                </li>
+                <li>
+                    <button onclick="showDiv(this)" class="btn btn-1 btn-sep icon-info" id="3">Brug kode</button>
+                </li>
+            </ul>
+        </div>
+
+        <div style=" height: 500px; width: 100%; align-items: center">
+            <div id="div1" style="display: none; margin-top: 50px">
+
+                <form action="/create" method="post">
+                    <div class="col-3 input-effect" style="width: 42%">
+                        <input class="effect-19" type="text" placeholder="" name="name" required>
+                        <label>Navn</label>
+                        <span class="focus-border">
+              <i></i>
+            </span>
+                    </div>
+
+                    <div class="col-3 input-effect" style="width: 42%">
+                        <input class="effect-19" type="text" placeholder="" name="email" required>
+                        <label>Email</label>
+                        <span class="focus-border">
+              <i></i>
+            </span>
+                    </div>
+                    <button style="width: 45%" class="btn btn-4 btn-sep icon-send" type="submit">Opret ønskeseddel
+                    </button>
+
+                </form>
+            </div>
+
+            <div id="div2" style="display: none; margin-top: 50px">
+                <form action="/login" method="post">
+                    <div class="col-3 input-effect" style="width: 42%">
+                        <input class="effect-19" type="text" placeholder="" name="name" required>
+                        <label>Navn</label>
+                        <span class="focus-border">
+              <i></i>
+            </span>
+                    </div>
+
+                    <div class="col-3 input-effect" style="width: 42%">
+                        <input class="effect-19" type="text" placeholder="" name="email" required>
+                        <label>Email</label>
+                        <span class="focus-border">
+              <i></i>
+            </span>
+                    </div>
+                    <br> <br> <br>
+
+                    <button style="width: 45%" class="btn btn-4 btn-sep icon-send" onclick="userDoesntExist()"
+                            type="submit">Login
+                    </button>
+
+
+                </form>
+            </div>
+            <div id="div3" style="display: none; margin-top: 50px">
+                <form action="/getList" method="get">
+
+                    <div class="col-3 input-effect" style="width: 95%;">
+                        <input class="effect-19" type="text" placeholder="" name="password" required>
+                        <label>Kode</label>
+                        <span class="focus-border">
+              <i></i>
+            </span>
+                    </div>
+                    <br> <br> <br>
+
+                    <button style="width: 49%" class="btn btn-4 btn-sep icon-send" type="submit">submit</button>
+                </form>
+            </div>
+        </div>
     </div>
+    <div>
+        <ul id="logoutLogin" style="display: none">
+            <li>
+                <form action="/logout">
+                    <button class="btn btn-3 btn-sep icon-heart" id="logoutButton" style="display: none">log ud her</button>
+                </form>
+            </li>
+            <li>
+                <form action="/login" method="post">
+                    <input style="display: none" id="hiddenNameInput" name="name" type="text">
+                    <input style="display: none" id="hiddenEmailInput" name="email" type="text">
+                    <button class="btn btn-3 btn-sep icon-heart" id="goToWishList" style="display: none; float: right">Gå til
+                        din ønskeseddel
+                    </button>
+                </form>
+            </li>
 
-
-</div >
-<div class="mainLoginDiv">
-
-    <div id="loginDiv1">
-        <h2 class="verdanaText">Her kan du oprette dig eller logge ind</h2>
-
-        <form action="/create" method="post">
-            <label> <br>
-                Navn: <br>
-                <input class="homePageInputs" type="text" name="name">
-            </label> <br>
-
-            <label> <br>
-                Email: <br>
-                <input class="homePageInputs" type="text" name="email"> <br>
-            </label> <br>
-
-            <button type="submit">Opret ønskeseddel</button>
-        </form>
+        </ul>
     </div>
-
-    <div id="loginDiv2">
-        <h2 class="verdanaText">Her kan du se andres ønsker via kode</h2>
-        <form action="/getList" method="get">
-            <label>
-                Indtast kode her <br>
-                <input class="homePageInputs" type="text" name="password"> <br>
-            </label> <br>
-            <button type="submit">submit</button>
-        </form>
+    <div>
+        <h4 style="display: none" id="hiddenName" th:text="${hiddenUser}"></h4>
+        <h4 style="display: none" id="hiddenEmail" th:text="${hiddenEmail}"></h4>
+        <h3 style="color: black; font-family: 'Times New Roman'" th:text="${errorMessage}"></h3>
+        <h3 style="color: black; font-family: 'Times New Roman'" id="doesntExist" th:text="${doesntExist}"></h3>
     </div>
 </div>
-<div class="bottomLeft">
 
-    <form action="/logout">
-        <button id="logoutButton" style="display: none">log ud her</button>
-    </form>
-</div>
+
 </body>
 <script>
 
     function loadLogOutbutton() {
-        if (document.getElementById('loggedIn?').textContent !== ''){
+        if (document.getElementById('loggedIn?').textContent !== '') {
             document.getElementById('logoutButton').style.display = "block"
+            document.getElementById('goToWishList').style.display = "block"
+            document.getElementById('logoutLogin').style.display = "block"
+
+            document.getElementById('hiddenNameInput').value = document.getElementById('hiddenName').textContent;
+            document.getElementById('hiddenEmailInput').value = document.getElementById('hiddenEmail').textContent;
         }
     }
+
+    function showDiv(element) {
+        resetInputs();
+
+        document.getElementById('div1').style.display = "none"
+        document.getElementById('div2').style.display = "none"
+        document.getElementById('div3').style.display = "none"
+
+        switch (element.id) {
+            case '1':
+                document.getElementById('div1').style.display = "block"
+                break
+            case '2':
+                document.getElementById('div2').style.display = "block"
+                break
+            case '3':
+                document.getElementById('div3').style.display = "block"
+                break
+        }
+    }
+
+    function resetInputs() {
+        let inputs = document.getElementsByClassName('effect-19')
+
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].value = ''
+        }
+    }
+
 
 </script>
 </html>

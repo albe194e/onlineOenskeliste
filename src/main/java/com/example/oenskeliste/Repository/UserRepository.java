@@ -1,8 +1,10 @@
 package com.example.oenskeliste.Repository;
 import com.example.oenskeliste.Model.DCM;
 import com.example.oenskeliste.Model.User;
+import com.example.oenskeliste.Model.Wish;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
+import java.util.ArrayList;
 
 @Repository
 public class UserRepository {
@@ -91,7 +93,60 @@ public class UserRepository {
         }
         return false;
     }
-    public String getPassword(User user) {
+    public ArrayList<Wish> getWishes(String name){
+
+        //First get UserId
+        String QUARY_USER_ID = "SELECT Id,Name from user";
+        int id = 0;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(QUARY_USER_ID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                int userId = resultSet.getInt(1);
+                String username = resultSet.getString(2);
+
+                if (name.equals(username)){
+                    id = userId;
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<Wish> wishes = new ArrayList<>();
+        String QUARY = "SELECT * FROM wish";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(QUARY);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                int userId = resultSet.getInt(1);
+
+                if (id == userId){
+
+                    Wish wish = new Wish(resultSet.getString(2),
+                                         resultSet.getString(3),
+                                         resultSet.getString(4),
+                                         resultSet.getString(5));
+
+                    wishes.add(wish);
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return wishes;
+    }
+
+
+    public String getPassword(String name) {
 
         String QUARY = "SELECT Name, Password FROM user";
 
@@ -99,9 +154,9 @@ public class UserRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(QUARY);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String name = resultSet.getString(1);
+                String userName = resultSet.getString(1);
 
-                if (user.getName().equals(name)) {
+                if (name.equals(userName)) {
                     return resultSet.getString(2);
                 }
             }

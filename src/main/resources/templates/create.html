@@ -1,108 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/create.css">
-    <link rel="stylesheet" href="/home.css">
+
+    <link rel="stylesheet" href="/inputs.css ">
+    <link rel="stylesheet" href="/buttons.css" >
+    <link rel="stylesheet" href="/ønskeliste.css" >
+
+    <link rel="stylesheet" href="/indexSide.css" >
+    <link rel="stylesheet" href="/background.css" >
+    <link rel="stylesheet" href="/create.css" >
+
     <meta charset="UTF-8">
     <title>Create WishList</title>
 </head>
 <body>
-<div>
-    <h4 class="verdanaText"> <span th:text="${date}"></span></h4>
-    <div class="negativeMargin">
-        <h1 class="header1">Her kan du tilføje og fjerne ønsker fra listen</h1> <br>
-        <a href="http://176.22.128.91/">
-            <img class="homeButton" src="homeButton.png" width="100px" height="100px">
-        </a>
+<a href="http://176.22.128.91/" style="position: fixed; top: 0; right: 0"> <button class="btn btn-2 btn-sep icon-cart"> Home</button> </a>
 
-        <h4 class="verdanaText"> <span th:text="${login}"></span></h4>
-    </div>
-
-</div>
-<div class="centerFlex">
-    <div >
-        <h2 class="verdanaText">Her kan du tilføje<br>dine ønsker til listen</h2>
-        <label for="addWish"></label><input id="addWish" type="text"> <br>
-        <button onclick="addWish()">Tilføj</button>
-        <br>
-    </div>
-
-    <div class="spacer"></div>
-
+<div class="full-screen">
     <div>
-        <h2 class="verdanaText">Her kan du fjerne<br>dine ønsker fra listen</h2>
-        <label for="removeWish"></label><input id="removeWish" type="text"> <br>
-        <button onclick="removeWish()">Fjern</button>
-        <br>
+        <div>
+            <h1>Her kan du tilføje og fjerne ønsker fra listen</h1> <br>
+
+            <div class="float-container">
+                <h4 class="float-child"><span th:text="${login}"></span></h4>
+                <h4 class="float-child"><span th:text="${password}"></span></h4>
+            </div>
+
+        </div>
     </div>
-</div>
+    <div class="float-container">
+        <div class="float-child">
+            <div class="table-wrapper">
+                <form id="tilføjØnskeForm" action="/tilføjØnske" method="post">
+                        <table class="fl-table">
 
-<div>
-    <ul id="wishlist">
-    </ul>
-</div>
-<div class="homePageSubDivs">
-    <div class="bottomright">
-    <form action="/submitList" method="post">
-        <label for="inputForm"></label>
-        <input id="inputForm" type="text" name="wish" style="display: none">
+                            <thead>
+                                <tr>
+                                    <th>Ønske</th>
+                                    <th>Pris</th>
+                                    <th>Link</th>
+                                    <th>Evt note</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><label for="ønske"></label>
+                                        <input style="color: black" id="ønske" type="text" placeholder="Ønske" name="ønske" required>
+                                </td>
+                                <td><label for="pris"></label>
+                                        <input style="color: black" id="pris"type="text" placeholder="Pris" name="pris">
 
-            <button type="submit">Submit ønskeliste</button>
-    </form>
-    <button onclick="deleteAllWishes()">Fjern alle ønsker</button>
-</div>
-    <div class="bottomLeft">
+                                </td>
+                                <td><label for="link"></label>
+                                        <input style="color: black" id="link"  type="text" placeholder="Link" name="link">
+                                </td>
+                                <td><label for="note"></label>
+                                        <input style="color: black" id="note"type="text" placeholder="Evt note" name="note">
+                                </td>
+                                <td>
+                                    <button class="btn btn-2 btn-sep icon-cart" id="sbmWish" type="submit">Tilføj ønske</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                </form>
+            </div>
 
-        <form action="/logout">
-            <button>log ud her</button>
-        </form>
-        <form action="/deleteUser" method="post">
-            <button type="submit">Slet din bruger og dine ønsker her!</button>
-        </form>
+        </div>
+
+        <div class="float-child">
+            <div class="table-wrapper">
+                <table id="wishlist" class="fl-table">
+                    <thead>
+                    <tr>
+                        <th>Nr</th>
+                        <th>Ønske</th>
+                        <th>Pris</th>
+                        <th>Link</th>
+                        <th>Note</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="wish : ${wish}">
+                        <td th:text="${wishStat.index +1}"></td>
+                        <td th:text="${wish.name}"></td>
+                        <td th:text="${wish.price}"></td>
+                        <td th:text="${wish.link}"></td>
+                        <td th:text="${wish.note}"></td>
+                        <td>
+                            <form action="/deleteWish" method="post">
+                                <input name="wish" type="text" style="display: none">
+                                <input name="pris" type="text" style="display: none">
+                                <input name="link" type="text" style="display: none">
+                                <input name="note" type="text" style="display: none">
+                                <button onmouseenter="makeForm(this)" type="submit"><img src="/RedX.png" height="20px"
+                                                                                         width="20px"></button>
+                            </form>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="height: 1000px">
+
+        <ul>
+            <li>
+                <form action="/deleteAllWishes" method="post">
+                    <button class="btn btn-3 btn-sep icon-heart" type="submit">Fjern alle ønsker</button>
+                </form>
+            </li>
+            <li>
+                <form action="/deleteUser" method="post">
+                    <button class="btn btn-3 btn-sep icon-heart" type="submit">Fjern bruger</button>
+                </form>
+            </li>
+            <li>
+                <form action="/logout">
+                    <button class="btn btn-3 btn-sep icon-heart" type="submit">Logout</button>
+                </form>
+            </li>
+            <li>
+                <form action="/submitList" method="post">
+                    <button class="btn btn-4 btn-sep icon-send" type="submit">Submit ønskeliste</button>
+                </form>
+            </li>
+        </ul>
     </div>
 </div>
 </body>
 
 <!-- JAVASCRIPT -->
 <script>
+    function makeForm(element) {
 
-    var list = document.getElementById('wishlist')
-
-
-    function addWish() {
-        var wish = document.getElementById('addWish').value;
-        if (wish.length >= 1) {
-            var wishElement = document.createElement('li');
-            wishElement.id = wish;
-            wishElement.appendChild(document.createTextNode(wish));
-            list.appendChild(wishElement);
-
-            document.getElementById('inputForm').value += wish + ';'
-
-            document.getElementById('addWish').value = '';
-        }
-    }
-    function removeWish() {
-
-        var wish = document.getElementById(document.getElementById('removeWish').value);
-
-        text = document.getElementById('inputForm').value
-
-        text = text.replace(document.getElementById('removeWish').value, '')
-
-        document.getElementById('inputForm').value = text
-
-        wish.remove();
-        document.getElementById('removeWish').value = '';
-
-
-    }
-    function deleteAllWishes() {
-        document.getElementById('inputForm').value = ''
-
-        while (list.childElementCount > 0) {
-            list.removeChild(list.firstChild)
-        }
+        element.parentNode.children.item(0).value = element.parentNode.parentNode.parentNode.children.item(1).textContent
+        element.parentNode.children.item(1).value = element.parentNode.parentNode.parentNode.children.item(2).textContent
+        element.parentNode.children.item(2).value = element.parentNode.parentNode.parentNode.children.item(3).textContent
+        element.parentNode.children.item(3).value = element.parentNode.parentNode.parentNode.children.item(4).textContent
     }
 </script>
 </html>
